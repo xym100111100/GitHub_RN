@@ -1,10 +1,11 @@
 import React, { Component } from "react"
 import { StyleSheet, View, Text } from "react-native"
 import Ionicons from 'react-native-vector-icons/Ionicons'
-
+import NavigationUtil from "../navigator/NavigationUtil"
 export default class WelcomePage extends Component {
     componentDidMount() {
         this.timer = setTimeout(() => {
+            NavigationUtil.resetToHomePage(this.props)
             // 跳转到首页
         }, 2000);
     }
