@@ -8,12 +8,24 @@ export default class PoPularPage extends Component {
 
 
     render() {
-        const TabNavigator = createAppContainer(createMaterialTopTabNavigator({
-
-        }))
+        const TabNavigator = createAppContainer(createMaterialTopTabNavigator(
+            {
+                PopularTab1: {
+                    screen: PopularTab,
+                    navigationOptions: {
+                        title: "tab1"
+                    }
+                },
+                PopularTab2: {
+                    screen: PopularTab,
+                    navigationOptions: {
+                        title: "tab2"
+                    }
+                }
+            }))
         return (
             <View style={style.container} >
-                <Text style={style.welcome} >PoPularPage</Text>
+                <TabNavigator />
             </View>
         )
     }
@@ -33,9 +45,6 @@ class PopularTab extends Component {
 const style = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
     },
     welcome: {
         fontSize: 20,
