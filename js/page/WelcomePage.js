@@ -16,6 +16,7 @@ export default class WelcomePage extends Component {
     }
 
     render() {
+
         return (
             <View style={style.container} >
                 <Text>欢迎

@@ -1,13 +1,16 @@
 import React, { Component } from "react"
-import { View, Text, StyleSheet,Button } from "react-native"
+import { View, Text, StyleSheet, Button } from "react-native"
+import NavigationUtil from "../navigator/NavigationUtil"
 
 export default class FavoritePage extends Component {
 
     render() {
-        const {navigation}  = this.props
+        const { navigation } = this.props
         return (
             <View style={style.container} >
-                <Text style={style.welcome} >FavoritePage</Text>
+                <Text style={style.welcome} onPress={() => {
+                    NavigationUtil.goPage({},"DetailPage")
+                }}  >跳转到详情页</Text>
                 <Button
                     title={"修改主題"}
                     onPress={
@@ -19,6 +22,7 @@ export default class FavoritePage extends Component {
                         })
                     }
                 />
+
             </View>
         )
     }

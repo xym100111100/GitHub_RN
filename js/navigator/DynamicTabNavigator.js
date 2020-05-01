@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { createAppContainer } from "react-navigation"
-import { createBottomTabNavigator,BottomTabBar } from "react-navigation-tabs"
+import { createBottomTabNavigator, BottomTabBar } from "react-navigation-tabs"
 import MyPage from "../page/MyPage"
 import PopularPage from "../page/PopularPage"
 import TrendingPage from "../page/TrendingPage"
@@ -80,7 +80,8 @@ export default class DynamicTabNavigator extends React.Component {
 
       return createAppContainer(createBottomTabNavigator(tabs,
          {
-            tabBarComponent :TabBarComponent
+
+            tabBarComponent: TabBarComponent // 每次切换tabs都会运行这里，就可以顺利地修改主题啦
          }))
    }
 
@@ -95,7 +96,7 @@ export default class DynamicTabNavigator extends React.Component {
 class TabBarComponent extends React.Component {
 
    constructor(props) {
-    
+      // 初始化的时候执行一次后就不再执行
       super(props)
       this.theme = {
          tintColor: props.activeTintColor,
@@ -104,18 +105,19 @@ class TabBarComponent extends React.Component {
    }
 
    render() {
-      
+
       const { routes, index } = this.props.navigation.state
-      if(routes[index].params){
-         const {theme} =  routes[index].params;
-         if(theme &&theme.updateTime > this.theme.updateTime){
+     
+      if (routes[index].params) {
+         const { theme } = routes[index].params;
+         if (theme && theme.updateTime > this.theme.updateTime) {
             this.theme = theme
          }
       }
-     
+
       return <BottomTabBar
          {...this.props}
-         activeTintColor={this.theme.tintColor|| this.props.activeTintColor}
+         activeTintColor={this.theme.tintColor || this.props.activeTintColor}
       />
    }
 }
