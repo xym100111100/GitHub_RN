@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { createAppContainer } from "react-navigation"
-import { createBottomTabNavigator } from "react-navigation-tabs"
+import { createBottomTabNavigator,BottomTabBar } from "react-navigation-tabs"
 import MyPage from "../page/MyPage"
 import PopularPage from "../page/PopularPage"
 import TrendingPage from "../page/TrendingPage"
@@ -80,7 +80,7 @@ export default class DynamicTabNavigator extends React.Component {
 
       return createAppContainer(createBottomTabNavigator(tabs,
          {
-
+            tabBarComponent :TabBarComponent
          }))
    }
 
@@ -93,7 +93,9 @@ export default class DynamicTabNavigator extends React.Component {
 }
 
 class TabBarComponent extends React.Component {
+
    constructor(props) {
+    
       super(props)
       this.theme = {
          tintColor: props.activeTintColor,
@@ -102,9 +104,18 @@ class TabBarComponent extends React.Component {
    }
 
    render() {
-      const { rootes, index } = this.props.navigation.state
-      if(){
-
+      
+      const { routes, index } = this.props.navigation.state
+      if(routes[index].params){
+         const {theme} =  routes[index].params;
+         if(theme &&theme.updateTime > this.theme.updateTime){
+            this.theme = theme
+         }
       }
+     
+      return <BottomTabBar
+         {...this.props}
+         activeTintColor={this.theme.tintColor|| this.props.activeTintColor}
+      />
    }
 }
