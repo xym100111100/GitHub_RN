@@ -38,7 +38,7 @@ const style = StyleSheet.create({
 })
 
 
-
+// 注册mapDispachToProps，这样就能在this.props中拿到onThemeChange进而执行theme中的onThemeChange
 const mapDispachToProps = dispatch => ({
     onThemeChange: theme => dispatch(action.onThemeChange(theme))
 })
