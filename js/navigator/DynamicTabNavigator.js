@@ -10,6 +10,8 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import Entypo from "react-native-vector-icons/Entypo"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import { connect } from "react-redux"
+import action from "../action"
+
 const TABS = {
    FavoritePage: {
       screen: FavoritePage,
@@ -66,7 +68,7 @@ const TABS = {
 }
 
 
-class DynamicTabNavigator extends React.Component {
+class DynamicTabNavigator extends Component {
    constructor(props) {
       super(props)
       console.disableYellowBox = true  // 去掉黄色警告
@@ -89,6 +91,7 @@ class DynamicTabNavigator extends React.Component {
          {
             // 每次切换tabs都会运行这里，就可以顺利地修改主题啦
             tabBarComponent: props => {
+
                return <TabBarComponent theme={this.props.theme}   {...props} />
             }
          }))
@@ -115,6 +118,16 @@ class TabBarComponent extends React.Component {
    }
 }
 
+/**
+ * 订阅store中的reducer中的theme来决定界面的主题，store中的theme改变的时候就会修改页面上的主题
+ * 
+ * 但是不懂为什么订阅不到onThemeChange
+ * @param {} state 
+ */
+const mapDispachToProps = dispatch => ({
+   onThemeChange: theme => dispatch(action.onThemeChange(theme))
+
+})
 const mapStateToProps = state => ({
    theme: state.theme.theme
 })

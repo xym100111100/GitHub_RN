@@ -15,7 +15,7 @@ const logger = store => next => action => {
         // console.log("dispaching", action)
     }
     const result = next(action);
-
+        // console.log(store.getState()) //这里是修改后的状态
 }
 
 
