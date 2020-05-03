@@ -1,5 +1,4 @@
 import Types from "../../action/types";
-import { ViewPagerAndroidComponent } from "react-native";
 
 const defaultState = {
     theme: 'blue'

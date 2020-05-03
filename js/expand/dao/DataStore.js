@@ -11,9 +11,7 @@ export default class DataStore {
         return new Promise((resolve, reject) => {
             this.fetchLocalData(url).then((warpData) => {
              
-                let a = DataStore.checkTimestampValid(warpData.timestamp)
-                console.log("aaaa",a )
-                if (warpData && a) {
+                if (warpData && DataStore.checkTimestampValid(warpData.timestamp)) {
                     resolve(warpData)
                 } else {
                     this.fetchNetData(url).then((data) => {
