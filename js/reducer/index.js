@@ -3,6 +3,10 @@ import {combineReducers} from "redux"
 import theme from "./theme"
 // 合并Reducer 
 import popular from "./popular"
+
+/**
+ * 这里的popular|theme就是引入文件中返回的对象，页面就是订阅这个值
+ */
 const index = combineReducers({
     theme:theme,
     popular:popular

@@ -7,7 +7,7 @@ export default class WelcomePage extends Component {
         this.timer = setTimeout(() => {
             NavigationUtil.resetToHomePage(this.props)
             // 跳转到首页
-        }, 2000);
+        }, 500);
     }
 
     componentWillMount() {
