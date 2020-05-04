@@ -3,12 +3,25 @@ import { View, Text, StyleSheet, Button } from "react-native"
 import NavigationUtil from "../navigator/NavigationUtil"
 import { connect } from "react-redux"
 import action from "../action"
+import NavigationBar from "../common/NabigationBar"
+const THEME_COLOR = "#678"
 class FavoritePage extends Component {
 
     render() {
-        const { navigation } = this.props
+
+
+        let statusBar = {
+            backgroundColor: THEME_COLOR,
+            barStytle: 'ligth-content'
+        }
+        let navigationBar = <NavigationBar
+            title={"趋势"}
+            stateBar={statusBar}
+            style={{ backgroundColor: THEME_COLOR }}
+        />
         return (
             <View style={style.container} >
+                {navigationBar}
                 <Text style={style.welcome} onPress={() => {
                     NavigationUtil.goPage({}, "DetailPage")
                 }}  >跳转到详情页</Text>
@@ -37,8 +50,6 @@ class FavoritePage extends Component {
 const style = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#F5FCFF'
     },
     welcome: {

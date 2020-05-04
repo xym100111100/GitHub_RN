@@ -6,12 +6,12 @@ import { connect } from "react-redux"
 import actions from "../action/index"
 import PopulartItem from "../common/PopularItem"
 import Toast from 'react-native-easy-toast'
-
+import NavigationBar from "../common/NabigationBar"
 
 //https://api.github.com/search/repositories?q=java
 const URL = "https://api.github.com/search/repositories?q="
 const QUERY_STR = "&sort=stars"
-const THEME_COLOR = "red"
+const THEME_COLOR = "#678"
 const pageSize = 10 // 设置常亮防止修改
 
 
@@ -25,7 +25,7 @@ export default class PoPularPage extends Component {
 
     constructor(props) {
         super(props)
-         this.tabNames = ["Java", "Android", "ios", "React"]
+        this.tabNames = ["Java", "Android", "ios", "React"]
         //this.tabNames = ["Java"]
     }
     _genTabs() {
@@ -42,6 +42,17 @@ export default class PoPularPage extends Component {
     }
 
     render() {
+        let statusBar = {
+            backgroundColor: THEME_COLOR,
+            barStytle: 'ligth-content'
+        }
+        let navigationBar = <NavigationBar
+            title={"最热"}
+            stateBar={statusBar}
+            style={{ backgroundColor: THEME_COLOR }}
+        />
+
+
         const TabNavigator = createAppContainer(createMaterialTopTabNavigator(
             this._genTabs(),
             {
@@ -59,6 +70,7 @@ export default class PoPularPage extends Component {
         ))
         return (
             <View style={style.container} >
+                {navigationBar}
                 <TabNavigator />
             </View>
         )
@@ -86,7 +98,7 @@ class PopularTab extends Component {
         if (loadMore) {
             onLoadMorePopular(this.storeName, ++store.pageIndex, pageSize, store.items, callBack = () => {
                 this.refs.toast.show("没有更多了")
-            }) 
+            })
         } else {
             onLoadPopularData(this.storeName, url, pageSize)
         }
@@ -127,7 +139,7 @@ class PopularTab extends Component {
     }
 
     genIndicator() {
-        
+
         return this._store().hideLoadingMore ? <View></View> :
             <View style={style.indicatorContainer} >
                 <ActivityIndicator

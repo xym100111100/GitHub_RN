@@ -2,17 +2,30 @@ import React, { Component } from "react"
 import { View, Text, StyleSheet, Button } from "react-native"
 import { connect } from "react-redux"
 import action from "../action"
+import NavigationBar from "../common/NabigationBar"
+const THEME_COLOR = "#678"
 class TrendingPage extends Component {
 
     render() {
-        const { navigation } = this.props
+        let statusBar = {
+            backgroundColor: THEME_COLOR,
+            barStytle: 'ligth-content'
+        }
+        let navigationBar = <NavigationBar
+            title={"趋势"}
+            stateBar={statusBar}
+            style={{ backgroundColor: THEME_COLOR }}
+        />
+
+
         return (
             <View style={style.container} >
+                {navigationBar}
                 <Text style={style.welcome} >TrendingPage</Text>
                 <Button
                     title={"修改主題"}
                     onPress={
-                        ()=>this.props.onThemeChange("red")
+                        () => this.props.onThemeChange("red")
                     }
                 />
             </View>
@@ -24,8 +37,8 @@ class TrendingPage extends Component {
 const style = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        // justifyContent: 'center',
+        // alignItems: 'center',
         backgroundColor: '#F5FCFF'
     },
     welcome: {
@@ -41,4 +54,4 @@ const mapDispachToProps = dispatch => ({
     onThemeChange: theme => dispatch(action.onThemeChange(theme))
 })
 
-export default connect (null,mapDispachToProps)(TrendingPage)
+export default connect(null, mapDispachToProps)(TrendingPage)

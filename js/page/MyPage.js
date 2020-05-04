@@ -1,25 +1,74 @@
 import React, { Component } from "react"
-import { View, Text, StyleSheet, Button, TextInput ,ViewPropTypes} from "react-native"
+import { View, Text, TouchableOpacity, StyleSheet, Button, TextInput, ViewPropTypes } from "react-native"
 import { connect } from "react-redux"
 import action from "../action"
+import Feather from "react-native-vector-icons/Feather"
+import Ionicons from "react-native-vector-icons/Ionicons"
 
+import NavigationBar from "../common/NabigationBar"
+const THEME_COLOR = "#678"
 class MyPage extends Component {
+    getRightButton() {
+        return <View style={{ flexDirection: 'row' }} >
+            <TouchableOpacity
+                onPress={() => { }}
+            >
+                <View style={{ padding: 5, marginRight: 8 }} >
+                    <Feather
+                        name={'search'}
+                        size={24}
+                        style={{ color: 'white' }}
+                    />
+                </View>
+            </TouchableOpacity>
+        </View>
+    }
+
+    getLeftButton(callBack) {
+        return (
+
+            <TouchableOpacity onPress={callBack} >
+                <View style={{padding:10,paddingRight:10}} >
+                    <Ionicons
+                        name={"ios-arrow-back"}
+                        size={26}
+                        style={{ color: 'white' }}
+                    />
+                </View>
+
+            </TouchableOpacity>
+
+        )
+    }
 
     render() {
-        const { navigation } = this.props
+        let statusBar = {
+            backgroundColor: THEME_COLOR,
+            barStytle: 'ligth-content'
+        }
+        let navigationBar = <NavigationBar
+            title={"我的"}
+            stateBar={statusBar}
+            style={{ backgroundColor: THEME_COLOR }}
+            rightButton={this.getRightButton()}
+            leftButton={this.getLeftButton()}
+        />
+
+
         return (
             <View style={style.container} >
+                {navigationBar}
                 <Text style={style.welcome} >MyPage</Text>
                 <Button
                     title={"修改主題黄色"}
                     onPress={
                         () => {
-                    
+
                             return this.props.onThemeChange("yellow")
                         }
                     }
                 />
-                <TextInput />
+
             </View>
         )
     }
@@ -29,8 +78,8 @@ class MyPage extends Component {
 const style = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        // justifyContent: 'center',
+        // alignItems: 'center',
         backgroundColor: '#F5FCFF'
     },
     welcome: {
@@ -58,5 +107,5 @@ const mapDispachToProps = dispatch => ({
 })
 const mapStateToProps = state => ({
     theme: state.theme.theme
- })
+})
 export default connect(mapStateToProps, mapDispachToProps)(MyPage)

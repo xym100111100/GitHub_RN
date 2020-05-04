@@ -52,7 +52,7 @@ export default class NavigationBar extends Component {
             {this.getButtonElement(this.props.rightButton)}
          </View>;
       return (
-         <View style={[styles.container, this.props.style]}> {/* 这里设置了container，但是用户会传style下来，覆盖原本设置的 */}
+         <View style={[styles.container, this.props.style]}> 
             {statusBar}
             {content}
          </View>

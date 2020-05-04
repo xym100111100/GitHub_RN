@@ -83,7 +83,7 @@ class DynamicTabNavigator extends Component {
 
       const { MyPage, PopularPage, TrendingPage, FavoritePage } = TABS
 
-      const tabs = { MyPage, PopularPage, TrendingPage, FavoritePage };
+      const tabs = {  PopularPage, TrendingPage, FavoritePage ,MyPage};
 
       //PopularPage.navigationOptions.tabBarLabel = "最热0" //动态修改tab属性,由此可以知道可以修改很多属性
 
