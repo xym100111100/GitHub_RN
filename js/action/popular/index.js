@@ -1,5 +1,5 @@
 import Types from "../types"
-import DataStore from "../../expand/dao/DataStore"
+import DataStore, {FLAG_STOEAGE} from "../../expand/dao/DataStore"
 
 export function onLoadPopularData(storeName, url, pageSize) {
 
@@ -9,7 +9,7 @@ export function onLoadPopularData(storeName, url, pageSize) {
          storeName: storeName
       })
       let dataStore = new DataStore()
-      dataStore.fetchData(url) // 异步action与数据流
+      dataStore.fetchData(url,FLAG_STOEAGE.flag_popular) // 异步action与数据流
          .then(data => {
             headleData(dispatch, storeName, data, pageSize)
          }).catch(error => {

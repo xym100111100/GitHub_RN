@@ -1,27 +1,27 @@
 import { AsyncStorage } from "react-native"
-import { createStore } from "redux"
-
+import { Trending } from "GitHubTrending"
+export const FLAG_STOEAGE = { flag_popular: 'popular', flag_trending: 'trending' }
 export default class DataStore {
 
     /**
      * 请求策略，先请求本地，再请网络
      * @param {*} url 
      */
-    fetchData(url) {
+    fetchData(url, flag) {
         return new Promise((resolve, reject) => {
             this.fetchLocalData(url).then((warpData) => {
-             
+
                 if (warpData && DataStore.checkTimestampValid(warpData.timestamp)) {
                     resolve(warpData)
                 } else {
-                    this.fetchNetData(url).then((data) => {
+                    this.fetchNetData(url, flag).then((data) => {
                         resolve(this._wrapData(data))
                     }).catch((error) => {
                         reject(error)
                     })
                 }
             }).catch((error) => {
-                this.fetchNetData(url).then((data) => {
+                this.fetchNetData(url, flag).then((data) => {
                     resolve(this._wrapData(data))
                 }).catch((error) => {
                     reject(error)
@@ -52,7 +52,7 @@ export default class DataStore {
     fetchLocalData(url) {
         return new Promise((resolve, reject) => {
             AsyncStorage.getItem(url, (error, result) => {
-             
+
                 if (!error) {
                     try {
                         // 解析发生错误抛出异常
@@ -71,24 +71,38 @@ export default class DataStore {
      * 从网络获取数据
      * @param {} url 
      */
-    fetchNetData(url) {
+    fetchNetData(url, flag) {
         return new Promise((resolve, reject) => {
-            fetch(url)
-                .then((response) => {
-                    if (response.ok) {
-                        return response.json()
-                    }
-                    throw new Error('Network response was not ok')
-                })
-                .then((responseData) => {
-                    // 保存数据到本地
-                    this.saveData(url, responseData)
-                    // 返回数据给调用者
-                    resolve(responseData)
-                })
-                .catch((error) => {
-                    reject(error)
-                })
+            if (flag !== FLAG_STOEAGE.flag_trending) {
+                fetch(url)
+                    .then((response) => {
+                        if (response.ok) {
+                            return response.json()
+                        }
+                        throw new Error('Network response was not ok')
+                    })
+                    .then((responseData) => {
+                        // 保存数据到本地
+                        this.saveData(url, responseData)
+                        // 返回数据给调用者
+                        resolve(responseData)
+                    })
+                    .catch((error) => {
+                        reject(error)
+                    })
+            } else {
+                new Trending().fetchTrending(url)
+                    .then(items => {
+                        if (!items) {
+                            throw new Error("response data is null")
+                        }
+                        this.saveData(url, items)
+                        resolve(items)
+                    }).catch(error => {
+                        reject(error)
+                    })
+            }
+
         })
     }
 
@@ -99,7 +113,7 @@ export default class DataStore {
      */
     _wrapData(data) {
         let a = { data: data, timestamp: new Date().getTime() }
-  
+
         return a
     }
 
@@ -108,7 +122,7 @@ export default class DataStore {
      * @param {} timestamp 
      */
     static checkTimestampValid(timestamp) {
-       
+
         const currentDate = new Date();
         const targetDate = new Date();
         targetDate.setTime(timestamp);
