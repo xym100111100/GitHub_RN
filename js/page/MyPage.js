@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { View, Text, StyleSheet, Button, TextInput } from "react-native"
+import { View, Text, StyleSheet, Button, TextInput ,ViewPropTypes} from "react-native"
 import { connect } from "react-redux"
 import action from "../action"
 
