@@ -1,6 +1,6 @@
 import Types from "../types"
 import DataStore, {FLAG_STOEAGE} from "../../expand/dao/DataStore"
-
+import {headleData} from "../ActionUtil"
 export function onLoadPopularData(storeName, url, pageSize) {
 
    return dispatch => {
@@ -11,7 +11,7 @@ export function onLoadPopularData(storeName, url, pageSize) {
       let dataStore = new DataStore()
       dataStore.fetchData(url,FLAG_STOEAGE.flag_popular) // 异步action与数据流
          .then(data => {
-            headleData(dispatch, storeName, data, pageSize)
+            headleData(Types.POPULAR_REFRESH_SUCCESS,dispatch, storeName, data, pageSize)
          }).catch(error => {
             console.log(error)
             dispatch({
@@ -61,20 +61,3 @@ export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = []
    }
 }
 
-function headleData(dispatch, storeName, data, pageSize) {
-
-   let fixItems = [];
-   if (data && data.data && data.data.items) {
-      fixItems = data.data.items
-   }
-
-   dispatch({
-      items:fixItems,
-      type: Types.POPULAR_REFRESH_SUCCESS,
-      projectModes: pageSize > fixItems.length ? fixItems : fixItems.slice(0, pageSize),
-      storeName,
-      pageIndex: 1
-   })
-
-
-}

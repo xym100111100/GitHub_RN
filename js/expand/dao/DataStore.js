@@ -1,6 +1,7 @@
 import { AsyncStorage } from "react-native"
-import { Trending } from "GitHubTrending"
+import Trending from 'GitHubTrending';
 export const FLAG_STOEAGE = { flag_popular: 'popular', flag_trending: 'trending' }
+const AUTH_TOKEN = 'fd82d1e882462e23b8e88aa82198f166';
 export default class DataStore {
 
     /**
@@ -10,16 +11,19 @@ export default class DataStore {
     fetchData(url, flag) {
         return new Promise((resolve, reject) => {
             this.fetchLocalData(url).then((warpData) => {
-
-                if (warpData && DataStore.checkTimestampValid(warpData.timestamp)) {
-                    resolve(warpData)
-                } else {
+               
+          
+                // if (warpData && DataStore.checkTimestampValid(warpData.timestamp)) {
+                //     resolve(warpData)
+                // } else {
                     this.fetchNetData(url, flag).then((data) => {
+                        console.log("-------")
+                        console.log(data)
                         resolve(this._wrapData(data))
                     }).catch((error) => {
                         reject(error)
                     })
-                }
+                // }
             }).catch((error) => {
                 this.fetchNetData(url, flag).then((data) => {
                     resolve(this._wrapData(data))
@@ -76,7 +80,9 @@ export default class DataStore {
             if (flag !== FLAG_STOEAGE.flag_trending) {
                 fetch(url)
                     .then((response) => {
+                    
                         if (response.ok) {
+                            
                             return response.json()
                         }
                         throw new Error('Network response was not ok')
@@ -84,23 +90,24 @@ export default class DataStore {
                     .then((responseData) => {
                         // 保存数据到本地
                         this.saveData(url, responseData)
-                        // 返回数据给调用者
+                        // 返回数据给调用者,下面有then的话还会被接受到
                         resolve(responseData)
                     })
                     .catch((error) => {
                         reject(error)
                     })
             } else {
-                new Trending().fetchTrending(url)
+                new Trending(AUTH_TOKEN).fetchTrending(url)
                     .then(items => {
                         if (!items) {
-                            throw new Error("response data is null")
+                            throw new Error('responseData is null');
                         }
-                        this.saveData(url, items)
-                        resolve(items)
-                    }).catch(error => {
-                        reject(error)
+                        this.saveData(url, items);
+                        resolve(items);
                     })
+                    .catch(error => {
+                        reject(error);
+                    });
             }
 
         })

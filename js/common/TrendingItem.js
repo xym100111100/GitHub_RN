@@ -2,7 +2,7 @@ import React from "react"
 import { Image, TouchableOpacity, StyleSheet, Text, View } from "react-native"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 
-export default class TrendingItem extends React.Component {
+export default class PopulartItem extends React.Component {
 
     render() {
         const { item } = this.props
@@ -20,13 +20,13 @@ export default class TrendingItem extends React.Component {
                     style={{ color: 'red' }}
                 />
             </TouchableOpacity>
-        if (!item || !item.owner) return null;
+        if (!item ) return null;
         return (
             <TouchableOpacity
 
                 onPress={this.props.onSelect}
             >
-                <View style={style.cell_container} >
+                <View style={style.cell_container} > 
                     <Text>
                         {item.full_name}
                     </Text>
@@ -35,8 +35,13 @@ export default class TrendingItem extends React.Component {
                     </Text>
                     <View style={style.row} >
                         <View style={{ flexDirection: 'row' }} >
-                            <Text>Author: </Text>
-                            <Image style={{ width: 22, height: 22 }} source={{ uri: item.owner.avatar_url }} />
+                            <Text> Built by : </Text>
+                            {
+                                item.contributors.map((val=>{
+                                    return(<Image style={{ width: 22, height: 22 }} source={{ uri: val }} />)
+                                }))
+                            }
+                           
                         </View>
 
                         <View style={{ flexDirection: 'row', justifyContent: "space-between" }} >
