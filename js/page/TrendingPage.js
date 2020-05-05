@@ -24,8 +24,8 @@ export default class TrendingPage extends Component {
 
     constructor(props) {
         super(props)
-        //this.tabNames = ["ALL", "C", "C#", "PHP"]
-        this.tabNames = ["java"]
+        //this.tabNames = ["ALL", "C", "C#", "PHP"] 注意，这里追踪下去会发现是使用了一个组件去请求github上的数据，gitub上面有该组件不一定有。
+        this.tabNames = ["java","javascript","HTML","PHP","python","Go","C"]
     }
     _genTabs() {
         const tabs = {};

@@ -28,7 +28,7 @@ export default class PopulartItem extends React.Component {
             >
                 <View style={style.cell_container} > 
                     <Text>
-                        {item.full_name}
+                        {item.fullName}
                     </Text>
                     <Text style={style.description} >
                         {item.description}
@@ -37,8 +37,8 @@ export default class PopulartItem extends React.Component {
                         <View style={{ flexDirection: 'row' }} >
                             <Text> Built by : </Text>
                             {
-                                item.contributors.map((val=>{
-                                    return(<Image style={{ width: 22, height: 22 }} source={{ uri: val }} />)
+                                item.contributors.map(((val,index)=>{
+                                    return(<Image key={index}  style={{ width: 22, height: 22 }} source={{ uri: val }} />)
                                 }))
                             }
                            
@@ -46,7 +46,7 @@ export default class PopulartItem extends React.Component {
 
                         <View style={{ flexDirection: 'row', justifyContent: "space-between" }} >
                             <Text>Star: </Text>
-                            <Text>{item.stargazers_count}</Text>
+                            <Text>{item.forkCount}</Text>
 
                         </View>
                         {favoriteButton}
