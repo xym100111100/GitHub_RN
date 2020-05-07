@@ -2,7 +2,7 @@ import React from "react"
 import { Image, TouchableOpacity, StyleSheet, Text, View } from "react-native"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 
-export default class PopulartItem extends React.Component {
+export default class TrendingItem extends React.Component {
 
     render() {
         const { item } = this.props

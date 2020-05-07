@@ -13,9 +13,9 @@ export default class DataStore {
             this.fetchLocalData(url).then((warpData) => {
                
           
-                // if (warpData && DataStore.checkTimestampValid(warpData.timestamp)) {
-                //     resolve(warpData)
-                // } else {
+                if (warpData && DataStore.checkTimestampValid(warpData.timestamp)) {
+                    resolve(warpData)
+                } else {
                     this.fetchNetData(url, flag).then((data) => {
                         console.log("-------")
                         console.log(data)
@@ -23,7 +23,7 @@ export default class DataStore {
                     }).catch((error) => {
                         reject(error)
                     })
-                // }
+                }
             }).catch((error) => {
                 this.fetchNetData(url, flag).then((data) => {
                     resolve(this._wrapData(data))
