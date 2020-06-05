@@ -1,4 +1,4 @@
-import { AsyncStorage } from "react-native"
+import AsyncStorage from '@react-native-community/async-storage';
 import Trending from 'GitHubTrending';
 export const FLAG_STOEAGE = { flag_popular: 'popular', flag_trending: 'trending' }
 const AUTH_TOKEN = 'fd82d1e882462e23b8e88aa82198f166';

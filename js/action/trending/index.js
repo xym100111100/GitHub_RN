@@ -2,7 +2,7 @@ import Types from "../types"
 import DataStore, {FLAG_STOEAGE} from "../../expand/dao/DataStore"
 import {headleData} from "../ActionUtil"
 
-export function onLoadTrendingData(storeName, url, pageSize) {
+export function onRefreshTrending(storeName, url, pageSize) {
 
    return dispatch => {
       dispatch({

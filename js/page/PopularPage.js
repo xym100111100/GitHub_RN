@@ -92,7 +92,7 @@ class PopularTab extends Component {
     }
 
     loadData(loadMore) {
-        const { onLoadPopularData, onLoadMorePopular } = this.props
+        const { onRefreshPopular, onLoadMorePopular } = this.props
         const store = this._store()
         const url = this.genFetchUrl(this.storeName)
         if (loadMore) {
@@ -100,7 +100,7 @@ class PopularTab extends Component {
                 this.refs.toast.show("没有更多了")
             })
         } else {
-            onLoadPopularData(this.storeName, url, pageSize)
+            onRefreshPopular(this.storeName, url, pageSize)
         }
 
 
@@ -195,7 +195,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchTOProps = dispatch => ({
-    onLoadPopularData: (storeName, url, pageSize) => dispatch(actions.onLoadPopularData(storeName, url, pageSize)),
+    onRefreshPopular: (storeName, url, pageSize) => dispatch(actions.onRefreshPopular(storeName, url, pageSize)),
 
     onLoadMorePopular: (storeName, pageIndex, pageSize, items, callBack) => dispatch(actions.onLoadMorePopular(storeName, pageIndex, pageSize, items, callBack))
 })

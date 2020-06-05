@@ -4,7 +4,6 @@ import { connect } from "react-redux"
 import action from "../action"
 import Feather from "react-native-vector-icons/Feather"
 import Ionicons from "react-native-vector-icons/Ionicons"
-import {WebView} from 'react-native-webview';
 import {MORE_MENU} from '../common/MORE_MENU';
 import GlobalStyles from '../res/styles/GlobalStyles';
 import ViewUtil from '../util/ViewUtil';

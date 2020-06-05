@@ -1,5 +1,7 @@
 import React from "react"
-import { View, Text, Button, TextInput, StyleSheet, AsyncStorage } from "react-native"
+import AsyncStorage from '@react-native-community/async-storage';
+
+import { View, Text, Button, TextInput, StyleSheet } from "react-native"
 
 const KEY = "save_key"
 export default class AsyncStorageDemoPage extends React.Component {

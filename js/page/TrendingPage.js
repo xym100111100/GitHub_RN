@@ -160,7 +160,7 @@ class TrendingTab extends Component {
     }
 
     loadData(loadMore) {
-        const { onLoadTrendingData, onLoadMoreTrending } = this.props
+        const { onRefreshTrending, onLoadMoreTrending } = this.props
         const store = this._store()
         const url = this.genFetchUrl(this.storeName)
         if (loadMore) {
@@ -168,7 +168,7 @@ class TrendingTab extends Component {
                 this.refs.toast.show("没有更多了")
             })
         } else {
-            onLoadTrendingData(this.storeName, url, pageSize)
+            onRefreshTrending(this.storeName, url, pageSize)
         }
 
 
@@ -267,7 +267,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchTOProps = dispatch => ({
-    onLoadTrendingData: (storeName, url, pageSize) => dispatch(actions.onLoadTrendingData(storeName, url, pageSize)),
+    onRefreshTrending: (storeName, url, pageSize) => dispatch(actions.onRefreshTrending(storeName, url, pageSize)),
 
     onLoadMoreTrending: (storeName, pageIndex, pageSize, items, callBack) => dispatch(actions.onLoadMoreTrending(storeName, pageIndex, pageSize, items, callBack))
 })

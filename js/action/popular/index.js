@@ -1,7 +1,7 @@
 import Types from "../types"
 import DataStore, {FLAG_STOEAGE} from "../../expand/dao/DataStore"
 import {headleData} from "../ActionUtil"
-export function onLoadPopularData(storeName, url, pageSize) {
+export function onRefreshPopular(storeName, url, pageSize) {
 
    return dispatch => {
       dispatch({
