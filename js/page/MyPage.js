@@ -7,7 +7,7 @@ import Ionicons from "react-native-vector-icons/Ionicons"
 import {MORE_MENU} from '../common/MORE_MENU';
 import GlobalStyles from '../res/styles/GlobalStyles';
 import ViewUtil from '../util/ViewUtil';
-import NavigationBar from "../common/NabigationBar"
+import NavigationBar from "../common/NavigationBar"
 const THEME_COLOR = "#678"
 class MyPage extends Component {
     getRightButton() {

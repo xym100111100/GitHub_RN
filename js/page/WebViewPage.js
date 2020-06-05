@@ -62,7 +62,7 @@ export default class WebViewPage extends Component<Props> {
         return (
             <SafeAreaViewPlus
                 style={GlobalStyles.root_container}
-                topColor={theme.themeColor}
+             
             >
                 {navigationBar}
                 <WebView

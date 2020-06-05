@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Button } from "react-native"
 import NavigationUtil from "../navigator/NavigationUtil"
 import { connect } from "react-redux"
 import action from "../action"
-import NavigationBar from "../common/NabigationBar"
+import NavigationBar from "../common/NavigationBar"
 const THEME_COLOR = "#678"
 class FavoritePage extends Component {
 

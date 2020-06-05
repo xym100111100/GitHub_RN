@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import Trending from 'GitHubTrending';
-export const FLAG_STOEAGE = { flag_popular: 'popular', flag_trending: 'trending' }
+export const FLAG_STORAGE = { flag_popular: 'popular', flag_trending: 'trending' }
 const AUTH_TOKEN = 'fd82d1e882462e23b8e88aa82198f166';
 export default class DataStore {
 
@@ -77,7 +77,7 @@ export default class DataStore {
      */
     fetchNetData(url, flag) {
         return new Promise((resolve, reject) => {
-            if (flag !== FLAG_STOEAGE.flag_trending) {
+            if (flag !== FLAG_STORAGE.flag_trending) {
                 fetch(url)
                     .then((response) => {
                     

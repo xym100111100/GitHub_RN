@@ -8,7 +8,7 @@ import TrendingtItem from "../common/TrendingItem"
 import TrendingDialog, { TimeSpans } from '../common/TrendingDialog';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import Toast from 'react-native-easy-toast'
-import NavigationBar from "../common/NabigationBar"
+import NavigationBar from "../common/NavigationBar"
 const EVENT_TYPE_TIME_SPAN_CHANGE = 'EVENT_TYPE_TIME_SPAN_CHANGE';
 
 const URL = 'https://github.com/trending/';

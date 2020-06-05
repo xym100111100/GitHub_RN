@@ -4,15 +4,20 @@ import { createMaterialTopTabNavigator } from "react-navigation-tabs"
 import { createAppContainer } from "react-navigation"
 import { connect } from "react-redux"
 import actions from "../action/index"
-import PopulartItem from "../common/PopularItem"
+import PopulartItem from "../common/PopulartItem"
 import Toast from 'react-native-easy-toast'
-import NavigationBar from "../common/NabigationBar"
+import NavigationBar from "../common/NavigationBar"
+import FavoriteDao from '../expand/dao/FavoriteDao';
+import {FLAG_STORAGE} from '../expand/dao/DataStore';
+import FavoriteUtil from '../util/FavoriteUtil';
+import NavigationUtil from "../navigator/NavigationUtil"
 
 //https://api.github.com/search/repositories?q=java
 const URL = "https://api.github.com/search/repositories?q="
 const QUERY_STR = "&sort=stars"
 const THEME_COLOR = "#678"
 const pageSize = 10 // 设置常亮防止修改
+const favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
 
 
 /**
@@ -25,14 +30,14 @@ export default class PoPularPage extends Component {
 
     constructor(props) {
         super(props)
-        this.tabNames = ["Java", "Android", "ios", "React"]
-        //this.tabNames = ["Java"]
+        //this.tabNames = ["Java", "Android", "ios", "React"]
+        this.tabNames = ["Java"]
     }
     _genTabs() {
         const tabs = {};
         this.tabNames.forEach((item, index) => {
             tabs[`tab${index}`] = {
-                screen: props => <PoPularTabPage {...props} tabLabel={item} />,  // 这种写法是动态设置导航的基础
+                screen: props => <PopularTabPage {...props} tabLabel={item} />,  // 这种写法是动态设置导航的基础
                 navigationOptions: {
                     title: item
                 }
@@ -91,19 +96,20 @@ class PopularTab extends Component {
         this.loadData()
     }
 
-    loadData(loadMore) {
-        const { onRefreshPopular, onLoadMorePopular } = this.props
-        const store = this._store()
-        const url = this.genFetchUrl(this.storeName)
+
+    loadData(loadMore, refreshFavorite) {
+        const {onRefreshPopular, onLoadMorePopular, onFlushPopularFavorite} = this.props;
+        const store = this._store();
+        const url = this.genFetchUrl(this.storeName);
         if (loadMore) {
-            onLoadMorePopular(this.storeName, ++store.pageIndex, pageSize, store.items, callBack = () => {
-                this.refs.toast.show("没有更多了")
-            })
+            onLoadMorePopular(this.storeName, ++store.pageIndex, pageSize, store.items, favoriteDao, callback => {
+                this.refs.toast.show('没有更多了');
+            });
+        } else if (refreshFavorite) {
+            onFlushPopularFavorite(this.storeName, store.pageIndex, pageSize, store.items, favoriteDao);
         } else {
-            onRefreshPopular(this.storeName, url, pageSize)
+            onRefreshPopular(this.storeName, url, pageSize, favoriteDao);
         }
-
-
     }
 
 
@@ -120,22 +126,29 @@ class PopularTab extends Component {
             }
         }
         return store
-    }
+    } 
 
     genFetchUrl(key) {
         return URL + key + QUERY_STR
     }
 
     renderItem(data) {
-        const item = data.item
-        return (
-            <PopulartItem
-                item={item}
-                onSelect={() => {
-
-                }}
-            />
-        )
+        const item = data.item;
+        
+        return <PopulartItem
+            projectModel={item}
+        
+            onSelect={(callback) => {
+                NavigationUtil.goPage({
+                
+                    projectModel: item,
+                    flag: FLAG_STORAGE.flag_popular,
+                    callback,
+                }, 'DetailPage');
+                //  this.props.navigation.navigate('tab1');//跳转到createMaterialTopTabNavigator中的指定tab，主要这个navigation一定要是在跳转到createMaterialTopTabNavigator中的指页面获取的
+            }}
+            onFavorite={(item, isFavorite) => FavoriteUtil.onFavorite(favoriteDao, item, isFavorite, FLAG_STORAGE.flag_popular)}
+        />;
     }
 
     genIndicator() {
@@ -150,16 +163,17 @@ class PopularTab extends Component {
 
             </View>
     }
-
+ 
     render() {
 
         let store = this._store();
+
         return (
             <View style={style.container} >
                 <FlatList
-                    data={store.projectModes}
+                    data={store.projectModels}
                     renderItem={data => this.renderItem(data)}
-                    keyExtractor={item => "" + item.id}
+                    keyExtractor={item => '' + item.item.id}
                     refreshControl={
                         <RefreshControl
                             title={"loading"}
@@ -191,16 +205,17 @@ class PopularTab extends Component {
  */
 
 const mapStateToProps = state => ({
-    popular: state.popular
-})
+    popular: state.popular,
+});
+const mapDispatchToProps = dispatch => ({
+    //将 dispatch(onRefreshPopular(storeName, url))绑定到props
+    onRefreshPopular: (storeName, url, pageSize, favoriteDao) => dispatch(actions.onRefreshPopular(storeName, url, pageSize, favoriteDao)),
+    onLoadMorePopular: (storeName, pageIndex, pageSize, items, favoriteDao, callBack) => dispatch(actions.onLoadMorePopular(storeName, pageIndex, pageSize, items, favoriteDao, callBack)),
+    onFlushPopularFavorite: (storeName, pageIndex, pageSize, items, favoriteDao) => dispatch(actions.onFlushPopularFavorite(storeName, pageIndex, pageSize, items, favoriteDao)),
+});
+//注意：connect只是个function，并不应定非要放在export后面
+const PopularTabPage = connect(mapStateToProps, mapDispatchToProps)(PopularTab);
 
-const mapDispatchTOProps = dispatch => ({
-    onRefreshPopular: (storeName, url, pageSize) => dispatch(actions.onRefreshPopular(storeName, url, pageSize)),
-
-    onLoadMorePopular: (storeName, pageIndex, pageSize, items, callBack) => dispatch(actions.onLoadMorePopular(storeName, pageIndex, pageSize, items, callBack))
-})
-
-const PoPularTabPage = connect(mapStateToProps, mapDispatchTOProps)(PopularTab)
 
 const style = StyleSheet.create({
     container: {

@@ -1,6 +1,6 @@
 import Types from "../types"
-import DataStore, {FLAG_STOEAGE} from "../../expand/dao/DataStore"
-import {headleData} from "../ActionUtil"
+import DataStore, {FLAG_STORAGE} from "../../expand/dao/DataStore"
+import {handleData} from "../ActionUtil"
 
 export function onRefreshTrending(storeName, url, pageSize) {
 
@@ -10,9 +10,9 @@ export function onRefreshTrending(storeName, url, pageSize) {
          storeName: storeName
       })
       let dataStore = new DataStore()
-      dataStore.fetchData(url,FLAG_STOEAGE.flag_trending) // 异步action与数据流
+      dataStore.fetchData(url,FLAG_STORAGE.flag_trending) // 异步action与数据流
          .then(data => {
-            headleData(Types.TRENDING_REFRESH_SUCCESS,dispatch, storeName, data, pageSize)
+            handleData(Types.TRENDING_REFRESH_SUCCESS,dispatch, storeName, data, pageSize)
          }).catch(error => {
             console.log(error)
             dispatch({
