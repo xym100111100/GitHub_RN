@@ -66,7 +66,7 @@ export default class PoPularPage extends Component {
                     upperCaseLabel: false,
                     scrollEnabled: true,
                     style: {
-                        backgroundColor: '#a67'
+                        backgroundColor: THEME_COLOR
                     },
                     inficatorStyle: style.inficatorStyle,
                     labelStyle: style.lableStyle
@@ -167,7 +167,20 @@ class PopularTab extends Component {
     render() {
 
         let store = this._store();
+        // 数据格式示例
+        // store={
+        //     hideLoadingMore: false,
+        //     isLoading: false,
+        //     items:'原始数据',
+        //     pageIndex: 1,
+        //     projectModels:[
+        //         {ProjectModel:{
+        //             isFavorite: false,
+        //             item:'每一条数据'
+        //         }}
+        //     ]
 
+        // }
         return (
             <View style={style.container} >
                 <FlatList

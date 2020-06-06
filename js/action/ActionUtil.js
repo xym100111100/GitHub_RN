@@ -32,11 +32,13 @@ export function handleData(actionType, dispatch, storeName, data, pageSize, favo
     //第一次要加载的数据
     let showItems = pageSize > fixItems.length ? fixItems : fixItems.slice(0, pageSize);
     _projectModels(showItems, favoriteDao, projectModels => {
+        // projectModels 在执行这个方法的时候其实是已经包装好的showItems
+         
         dispatch({
-            type: actionType, 
-            items: fixItems,
-            projectModels: projectModels,
-            storeName,
+            type: actionType,  // 执行的action
+            items: fixItems,  // 所有数据
+            projectModels: projectModels, // 本次要显示的数据
+            storeName, 
             pageIndex: 1,
         
         });
@@ -49,9 +51,10 @@ export function handleData(actionType, dispatch, storeName, data, pageSize, favo
  * @param favoriteDao
  * @param callback
  * @returns {Promise<void>}
- * @private
+ * @private 
  */
 export async function _projectModels(showItems, favoriteDao, callback) {
+
     let keys = [];
     try {
         //获取收藏的key
@@ -61,6 +64,7 @@ export async function _projectModels(showItems, favoriteDao, callback) {
     }
     let projectModels = [];
     for (let i = 0, len = showItems.length; i < len; i++) {
+        // console.log(new ProjectModel(showItems[i], Utils.checkFavorite(showItems[i], keys)))
         projectModels.push(new ProjectModel(showItems[i], Utils.checkFavorite(showItems[i], keys)));
     }
     doCallBack(callback, projectModels);

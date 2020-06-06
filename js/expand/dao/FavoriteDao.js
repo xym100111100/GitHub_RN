@@ -26,10 +26,12 @@ export default class FavoriteDao {
      * @param isAdd true 添加,false 删除
      * **/
     updateFavoriteKeys(key, isAdd) {
+    
         AsyncStorage.getItem(this.favoriteKey, (error, result) => {
+            
             if (!error) {
                 let favoriteKeys = [];
-                if (result) {
+                if (result) { 
                     favoriteKeys = JSON.parse(result);
                 }
                 let index = favoriteKeys.indexOf(key);

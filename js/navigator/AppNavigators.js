@@ -29,6 +29,9 @@ const MainNavigation = createStackNavigator({
     },
     DetailPage: {
         screen: DetailPage,
+        navigationOptions: {
+            headerShown: false
+        }
 
     },
     FatchDemoPage: {
