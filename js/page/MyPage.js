@@ -8,6 +8,8 @@ import {MORE_MENU} from '../common/MORE_MENU';
 import GlobalStyles from '../res/styles/GlobalStyles';
 import ViewUtil from '../util/ViewUtil';
 import NavigationBar from "../common/NavigationBar"
+import NavigationUtil from '../navigator/NavigationUtil';
+
 const THEME_COLOR = "#678"
 class MyPage extends Component {
     getRightButton() {
@@ -43,13 +45,26 @@ class MyPage extends Component {
         )
     }
 
+    onClick(menu) {
+        let RouteName, params = {};
+        switch (menu) {
+            case MORE_MENU.Tutorial:
+                RouteName = 'WebViewPage';
+                params.title = '教程';
+                params.url = 'https://coding.m.imooc.com/classindex.html?cid=304';
+                break;
+        }
+        if (RouteName) {
+            NavigationUtil.goPage(params, RouteName);
+        }
+    }
+
     getItem(menu) {
-        const {theme} = this.props;
-        return ViewUtil.getMenuItem(() => this.onClick(menu), menu, theme.themeColor);
+        return ViewUtil.getMenuItem(() => this.onClick(menu), menu, THEME_COLOR);
     }
 
     render() {
-        const {theme} = this.props;
+      
         let statusBar = {
             backgroundColor: THEME_COLOR,
             barStytle: 'ligth-content'
@@ -77,7 +92,7 @@ class MyPage extends Component {
                                 size={40}
                                 style={{
                                     marginRight: 10,
-                                    color: theme.themeColor,
+                                    color: THEME_COLOR,
                                 }}
                             />
                             <Text>GitHub Popular</Text>
@@ -88,7 +103,7 @@ class MyPage extends Component {
                             style={{
                                 marginRight: 10,
                                 alignSelf: 'center',
-                                color: theme.themeColor,
+                                color: THEME_COLOR,
                             }}/>
                     </TouchableOpacity>
                     <View style={GlobalStyles.line}/>

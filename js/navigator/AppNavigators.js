@@ -3,6 +3,8 @@ import { createStackNavigator } from "react-navigation-stack"
 import WelcomePage from "../page/WelcomePage"
 import HomePage from "../page/HomePage"
 import DetailPage from "../page/DetailPage"
+import WebViewPage from "../page/WebViewPage"
+
 import FatchDemoPage from "../page/FatchDemoPage"
 import AsyncStorageDemoPage from "../page/AsyncStorageDemoPage"
 import DataStoreDemoPage from "../page/DataStoreDemoPage"
@@ -29,6 +31,13 @@ const MainNavigation = createStackNavigator({
     },
     DetailPage: {
         screen: DetailPage,
+        navigationOptions: {
+            headerShown: false
+        }
+
+    },
+    WebViewPage: {
+        screen: WebViewPage,
         navigationOptions: {
             headerShown: false
         }
