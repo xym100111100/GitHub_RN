@@ -4,7 +4,7 @@ import { createMaterialTopTabNavigator } from "react-navigation-tabs"
 import { createAppContainer } from "react-navigation"
 import { connect } from "react-redux"
 import actions from "../action/index"
-import PopulartItem from "../common/PopulartItem"
+import PopularItem from "../common/PopularItem"
 import Toast from 'react-native-easy-toast'
 import NavigationBar from "../common/NavigationBar"
 import FavoriteDao from '../expand/dao/FavoriteDao';
@@ -135,7 +135,7 @@ class PopularTab extends Component {
     renderItem(data) {
         const item = data.item;
         
-        return <PopulartItem
+        return <PopularItem
             projectModel={item}
         
             onSelect={(callback) => {

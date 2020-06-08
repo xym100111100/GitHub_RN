@@ -3,7 +3,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import BaseItem from './BaseItem';
 
-export default class PopulartItem extends BaseItem {
+export default class PopularItem extends BaseItem { 
     render() {
         const {projectModel} = this.props;
         const {item} = projectModel;
