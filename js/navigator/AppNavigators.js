@@ -8,6 +8,9 @@ import WebViewPage from "../page/WebViewPage"
 import FatchDemoPage from "../page/FatchDemoPage"
 import AsyncStorageDemoPage from "../page/AsyncStorageDemoPage"
 import DataStoreDemoPage from "../page/DataStoreDemoPage"
+import AboutMePage from "../page/about/AboutMePage"
+import AboutPage from "../page/about/AboutPage"
+
 
 
 const InitNavigation = createStackNavigator(
@@ -31,6 +34,20 @@ const MainNavigation = createStackNavigator({
     },
     DetailPage: {
         screen: DetailPage,
+        navigationOptions: {
+            headerShown: false
+        }
+
+    },
+    AboutPage: {
+        screen: AboutPage,
+        navigationOptions: {
+            headerShown: false
+        }
+
+    },
+    AboutMePage: {
+        screen: AboutMePage,
         navigationOptions: {
             headerShown: false
         }
