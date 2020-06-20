@@ -20,6 +20,7 @@ export default class LanguageDao {
                     return;
                 }
                 if (!result) {
+                    // 如果result是空的就返回一些初始化的数据
                     let data = this.flag === FLAG_LANGUAGE.flag_language ? langs : keys;
                     this.save(data);
                     resolve(data);
