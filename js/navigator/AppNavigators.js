@@ -4,6 +4,7 @@ import WelcomePage from "../page/WelcomePage"
 import HomePage from "../page/HomePage"
 import DetailPage from "../page/DetailPage"
 import WebViewPage from "../page/WebViewPage"
+import CustomKeyPage from "../page/CustomKeyPage"
 
 import FatchDemoPage from "../page/FatchDemoPage"
 import AsyncStorageDemoPage from "../page/AsyncStorageDemoPage"
@@ -28,6 +29,12 @@ const InitNavigation = createStackNavigator(
 const MainNavigation = createStackNavigator({
     HomePage: {
         screen: HomePage,
+        navigationOptions: {
+            headerShown: false
+        }
+    },
+    CustomKeyPage: {
+        screen: CustomKeyPage,
         navigationOptions: {
             headerShown: false
         }
